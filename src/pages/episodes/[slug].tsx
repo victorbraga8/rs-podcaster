@@ -62,7 +62,7 @@ export default function Episode({episode}:episodeProps){
 
 
 export const getStaticPaths: GetStaticPaths = async ()=>{
-    const {data} = await api.get('episodes', {
+    const {data} = await api.get('transactions', {
         params:{
             _limit: 2,
             _sort: 'published_at',
@@ -87,7 +87,7 @@ export const getStaticPaths: GetStaticPaths = async ()=>{
 
 export const getStaticProps: GetStaticProps = async (ctx)=>{
     const {slug} = ctx.params;
-    const {data} = await api.get(`/episodes/${slug}`)
+    const {data} = await api.get(`/transactions/${slug}`)
 
     const episode = {
         id: data.id,
