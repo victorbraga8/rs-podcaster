@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "server": "json-server server.json -w -d 150 -p 3333",
-    "vercel-build": "npm run server"
+    "server": "json-server server.json -w -d 150 -p 3333"
   },
   "dependencies": {
     "axios": "^0.21.1",
