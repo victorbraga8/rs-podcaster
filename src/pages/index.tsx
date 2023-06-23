@@ -130,7 +130,7 @@ export const getStaticProps: GetStaticProps = async () => {
   // export async function getServerProps(){
   const { data } = await api.get("episodes", {
     params: {
-      _limit: 12,
+      _limit: 1,
       _sort: "published_at",
       _order: "desc",
     },
@@ -140,7 +140,7 @@ export const getStaticProps: GetStaticProps = async () => {
   // const {data} = await api.get('/');
 
   // const response = data;
-
+  console.log(data);
   const episodes = data.map((episode) => {
     return {
       id: episode.id,
