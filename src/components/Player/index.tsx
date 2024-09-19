@@ -6,6 +6,7 @@ import "rc-slider/assets/index.css";
 
 import styles from "./styles.module.scss";
 import { conversor } from "../../utils/conversor";
+import { Button } from "@/components/ui/button";
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -123,6 +124,7 @@ export function Player() {
           </div>
           <span>{conversor(episode?.duration ?? 0)}</span>
         </div>
+
         <div className={styles.buttons}>
           <button
             type="button"

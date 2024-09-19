@@ -122,7 +122,7 @@
   td {
     padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--gray-100);
-    max-width: 250px;
+    // max-width: 250px;
   }
 
   tr {
@@ -133,7 +133,13 @@
     color: var(--gray-200);
     text-transform: uppercase;
     font: 500 0.75rem Lexend, sans-serif;
-    text-align: left;
+    // text-align: left;
+    &:nth-child(3) {
+      padding-left: 0;
+    }
+    &:nth-child(4) {
+      padding-left: 0;
+    }
   }
 
   td {
@@ -165,7 +171,7 @@
 
       width: 2rem;
       height: 2rem;
-      background: var(--white);
+      // background: var(--white);
       border: 1px solid var(--gray-100);
       border-radius: 0.5rem;
       font-size: 0;

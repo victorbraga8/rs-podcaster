@@ -9,7 +9,18 @@ import styles from "./home.module.scss";
 import Link from "next/link";
 import { usePlayer } from "../contexts/PlayerContext";
 import Head from "next/head";
-import axios from "axios";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Play } from "lucide-react";
+import helpers from "../utils/helpers";
 
 type Episodes = {
   id: string;
@@ -75,53 +86,64 @@ export default function Home({ lastestEpisodes, allEpisodes }: HomeProps) {
       <hr className={styles.hr} />
       <section className={styles.allEpisodes}>
         <h2>Todos os Episódios</h2>
-        <table cellSpacing={0}>
-          {/* <thead>
-            <tr>
-              <th></th>
-              <th>Podcast</th>
-              <th>Integrantes</th>
-              <th>Data</th>
-              <th>Duração</th>
-              <th></th>
-            </tr>
-          </thead> */}
-          <tbody>
-            {allEpisodes.map((episode, index) => {
-              return (
-                <tr key={episode.id}>
-                  <td style={{ width: 72 }}>
-                    <Image
-                      width={120}
-                      height={120}
-                      src={episode.thumbnail}
-                      alt={episode.description}
-                      objectFit={"cover"}
-                    />
-                  </td>
-                  <td>
-                    <Link href={`episodes/${episode.id}`}>
-                      <>{episode.title}</>
-                    </Link>
-                  </td>
-                  <td>{episode.members}</td>
-                  <td style={{ width: 100 }}>{episode.publishedAt}</td>
-                  <td>{episode.durationAsString}</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        playList(episodeList, index + lastestEpisodes.length)
-                      }
-                    >
-                      <img src="/play-green.svg" alt="Tocar Episódio" />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="w-full h-full">
+          <Table className="w-full h-full table-fixed">
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-1/12 text-left"></TableHead>
+                <TableHead className="w-1/3 text-start">Podcast</TableHead>
+                <TableHead className="w-1/3 text-start px-0 mx-0">
+                  Integrantes
+                </TableHead>
+                <TableHead className="w-[11%] text-start">Data</TableHead>
+                <TableHead className="w-1/4 text-start">Duração</TableHead>
+                <TableHead className="w-1/12 text-left"></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {allEpisodes.map((episode, index) => {
+                helpers.handleData(episode.publishedAt);
+
+                return (
+                  <TableRow key={episode.id}>
+                    <TableCell className="w-1/12">
+                      <Image
+                        width={120}
+                        height={120}
+                        src={episode.thumbnail}
+                        alt={episode.description}
+                        objectFit={"cover"}
+                      />
+                    </TableCell>
+                    <TableCell className="w-1/3">
+                      <Link href={`episodes/${episode.id}`}>
+                        <>{episode.title}</>
+                      </Link>
+                    </TableCell>
+                    <TableCell className="w-1/3">{episode.members}</TableCell>
+                    <TableCell className="w-1/12 text-center">
+                      {helpers.handleData(episode.publishedAt)}
+                    </TableCell>
+                    <TableCell className="w-1/4 text-center">
+                      {episode.durationAsString}
+                    </TableCell>
+                    <TableCell className="w-1/4">
+                      <Button
+                        className="bg-violet-500 text-right "
+                        type="button"
+                        onClick={() =>
+                          playList(episodeList, index + lastestEpisodes.length)
+                        }
+                      >
+                        <Play size={20} className="absolute mx-auto" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </section>
     </div>
   );
