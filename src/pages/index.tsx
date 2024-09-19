@@ -72,10 +72,11 @@ export default function Home({ lastestEpisodes, allEpisodes }: HomeProps) {
           })}
         </ul>
       </section>
+      <hr className={styles.hr} />
       <section className={styles.allEpisodes}>
         <h2>Todos os Episódios</h2>
         <table cellSpacing={0}>
-          <thead>
+          {/* <thead>
             <tr>
               <th></th>
               <th>Podcast</th>
@@ -84,7 +85,7 @@ export default function Home({ lastestEpisodes, allEpisodes }: HomeProps) {
               <th>Duração</th>
               <th></th>
             </tr>
-          </thead>
+          </thead> */}
           <tbody>
             {allEpisodes.map((episode, index) => {
               return (
