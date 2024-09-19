@@ -9,11 +9,11 @@
     "server": "json-server server.json -w -d 150 -p 3333"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.7.7",
     "date-fns": "^2.21.1",
     "eslint-config-next": "^13.4.6",
     "miragejs": "^0.1.43",
-    "next": "^13.4.6",
+    "next": "^14.2.12",
     "rc-slider": "^9.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
