@@ -115,13 +115,18 @@
   tbody {
     max-height: 40vh;
     overflow-y: scroll;
-    display: grid;
+    // display: grid;
   }
 
   th,
   td {
     padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--gray-100);
+    max-width: 250px;
+  }
+
+  tr {
+    display: table;
   }
 
   th {

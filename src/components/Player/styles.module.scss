@@ -4,7 +4,7 @@
   padding: 3rem 4rem;
 
   background: var(--purple-500);
-  color: var(--white);
+  // color: var(--white);
 
   display: flex;
   flex-direction: column;
@@ -17,10 +17,10 @@
     gap: 1rem;
   }
 
-  strong {
-    font-family: Lexend, sans-serif;
-    font-weight: 600;
-  }
+  // strong {
+  //   font-family: Lexend, sans-serif;
+  //   font-weight: 600;
+  // }
 
   footer {
     align-self: stretch;

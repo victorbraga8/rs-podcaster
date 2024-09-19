@@ -69,7 +69,7 @@ export function Player() {
     <div className={styles.playerContainer}>
       <header>
         <img src="/playing.svg" alt="Tocando Agora" />
-        <strong>Tocando Agora</strong>
+        <strong className="text-red-800">Tocando Agora</strong>
       </header>
       {episode ? (
         <div className={styles.currentEpisode}>
@@ -85,7 +85,9 @@ export function Player() {
         </div>
       ) : (
         <div className={styles.emptyPlayer}>
-          <strong>Selecione um podcast para ouvir</strong>
+          <strong className="tw-text-red-500">
+            Selecione um podcast para ouvir
+          </strong>
         </div>
       )}
 
