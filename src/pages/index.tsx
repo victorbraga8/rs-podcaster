@@ -12,7 +12,6 @@ import Head from "next/head";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -72,12 +71,13 @@ export default function Home({ lastestEpisodes, allEpisodes }: HomeProps) {
                   <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
                 </div>
-                <button
+                <Button
+                  className="bg-lime-600 hover:bg-lime-800 text-right w-8 h-8 border border-gray-100 rounded-md transition-filter duration-200 hover:brightness-90 relative"
                   type="button"
                   onClick={() => playList(episodeList, index)}
                 >
-                  <img src="/play-green.svg" alt="Tocar Episódio" />
-                </button>
+                  <Play size={22} className="absolute inset-0 m-auto" />
+                </Button>
               </li>
             );
           })}
@@ -160,13 +160,11 @@ export default function Home({ lastestEpisodes, allEpisodes }: HomeProps) {
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get("episodes", {
     params: {
-      _limit: 2,
+      _limit: 30,
       _sort: "published_at",
       _order: "desc",
     },
   });
-
-  console.log(data);
 
   const episodes = data.map((episode) => {
     return {
