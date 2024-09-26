@@ -86,64 +86,72 @@ export default function Home({ lastestEpisodes, allEpisodes }: HomeProps) {
       <hr className={styles.hr} />
       <section className={styles.allEpisodes}>
         <h2>Todos os Episódios</h2>
-        <div className="w-full h-full">
-          <Table className="w-full h-full table-fixed">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-1/12 text-left"></TableHead>
-                <TableHead className="w-1/3 text-start">Podcast</TableHead>
-                <TableHead className="w-1/3 text-start px-0 mx-0">
-                  Integrantes
-                </TableHead>
-                <TableHead className="w-[11%] text-start">Data</TableHead>
-                <TableHead className="w-1/4 text-start">Duração</TableHead>
-                <TableHead className="w-1/12 text-left"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {allEpisodes.map((episode, index) => {
-                helpers.handleData(episode.publishedAt);
 
-                return (
-                  <TableRow key={episode.id}>
-                    <TableCell className="w-1/12">
-                      <Image
-                        width={120}
-                        height={120}
-                        src={episode.thumbnail}
-                        alt={episode.description}
-                        objectFit={"cover"}
-                      />
-                    </TableCell>
-                    <TableCell className="w-1/3">
-                      <Link href={`episodes/${episode.id}`}>
-                        <>{episode.title}</>
-                      </Link>
-                    </TableCell>
-                    <TableCell className="w-1/3">{episode.members}</TableCell>
-                    <TableCell className="w-1/12 text-center">
-                      {helpers.handleData(episode.publishedAt)}
-                    </TableCell>
-                    <TableCell className="w-1/4 text-center">
-                      {episode.durationAsString}
-                    </TableCell>
-                    <TableCell className="w-1/4">
-                      <Button
-                        className="bg-violet-500 text-right "
-                        type="button"
-                        onClick={() =>
-                          playList(episodeList, index + lastestEpisodes.length)
-                        }
-                      >
-                        <Play size={20} className="absolute mx-auto" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
+        <Table className="w-full table-fixed h-[400px] overflow-hidden pb-8">
+          <TableHeader className="sticky top-0 bg-white">
+            <TableRow>
+              <TableHead className="w-1/12 text-left"></TableHead>
+              <TableHead className="w-1/3 text-start uppercase text-gray-400 font-medium text-xs">
+                Podcast
+              </TableHead>
+              <TableHead className="w-1/3 text-start px-0 mx-0 uppercase text-gray-400 font-medium text-xs">
+                Integrantes
+              </TableHead>
+              <TableHead className="w-[11%] text-start uppercase text-gray-400 font-medium text-xs">
+                Data
+              </TableHead>
+              <TableHead className="w-1/4 text-start uppercase text-gray-400 font-medium text-xs">
+                Duração
+              </TableHead>
+              <TableHead className="w-1/12 text-left"></TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody className="max-h-[40vh] overflow-y-scroll block">
+            {allEpisodes.map((episode, index) => {
+              helpers.handleData(episode.publishedAt);
+
+              return (
+                <TableRow key={episode.id} className="table">
+                  <TableCell className="w-1/12 p-3 border-b border-gray-100">
+                    <Image
+                      width={120}
+                      height={120}
+                      src={episode.thumbnail}
+                      alt={episode.description}
+                      className="object-cover w-10 h-10 rounded-md"
+                    />
+                  </TableCell>
+                  <TableCell className="w-1/3">
+                    <Link href={`episodes/${episode.id}`}>
+                      <>{episode.title}</>
+                    </Link>
+                  </TableCell>
+                  <TableCell className="w-1/3 p-3 border-b border-gray-100">
+                    {episode.members}
+                  </TableCell>
+                  <TableCell className="w-1/12 p-3 border-b border-gray-100 text-center">
+                    {helpers.handleData(episode.publishedAt)}
+                  </TableCell>
+                  <TableCell className="w-1/4 p-3 border-b border-gray-100 text-center">
+                    {episode.durationAsString}
+                  </TableCell>
+                  <TableCell className="w-1/4 p-3 border-b border-gray-100">
+                    <Button
+                      className="bg-violet-500 text-right w-8 h-8 border border-gray-100 rounded-md transition-filter duration-200 hover:brightness-90 relative"
+                      type="button"
+                      onClick={() =>
+                        playList(episodeList, index + lastestEpisodes.length)
+                      }
+                    >
+                      <Play size={20} className="absolute inset-0 m-auto" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
       </section>
     </div>
   );
@@ -152,11 +160,13 @@ export default function Home({ lastestEpisodes, allEpisodes }: HomeProps) {
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get("episodes", {
     params: {
-      _limit: 30,
+      _limit: 2,
       _sort: "published_at",
       _order: "desc",
     },
   });
+
+  console.log(data);
 
   const episodes = data.map((episode) => {
     return {
