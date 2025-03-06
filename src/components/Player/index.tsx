@@ -6,6 +6,7 @@ import "rc-slider/assets/index.css";
 
 import styles from "./styles.module.scss";
 import { conversor } from "../../utils/conversor";
+import { Button } from "@/components/ui/button";
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -69,14 +70,14 @@ export function Player() {
     <div className={styles.playerContainer}>
       <header>
         <img src="/playing.svg" alt="Tocando Agora" />
-        <strong>Tocando Agora</strong>
+        <strong className="text-slate-100">Tocando Agora</strong>
       </header>
       {episode ? (
         <div className={styles.currentEpisode}>
           <Image
             alt=""
-            width={592}
-            height={592}
+            width={292}
+            height={292}
             src={episode.thumbnail}
             objectFit="cover"
           />
@@ -85,7 +86,9 @@ export function Player() {
         </div>
       ) : (
         <div className={styles.emptyPlayer}>
-          <strong>Selecione um podcast para ouvir</strong>
+          <strong className="text-slate-100">
+            Selecione um podcast para ouvir
+          </strong>
         </div>
       )}
 
@@ -121,6 +124,7 @@ export function Player() {
           </div>
           <span>{conversor(episode?.duration ?? 0)}</span>
         </div>
+
         <div className={styles.buttons}>
           <button
             type="button"
@@ -144,9 +148,9 @@ export function Player() {
             onClick={togglePlay}
           >
             {isPlaying ? (
-              <img src="/pause.svg" alt="Pause" />
+              <img src="/pause.svg" alt="Pause" className="mx-auto" />
             ) : (
-              <img src="/play.svg" alt="Tocar" />
+              <img src="/play.svg" alt="Tocar" className="mx-auto" />
             )}
           </button>
           <button

@@ -9,7 +9,17 @@ import styles from "./home.module.scss";
 import Link from "next/link";
 import { usePlayer } from "../contexts/PlayerContext";
 import Head from "next/head";
-import axios from "axios";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Play } from "lucide-react";
+import helpers from "../utils/helpers";
 
 type Episodes = {
   id: string;
@@ -61,86 +71,101 @@ export default function Home({ lastestEpisodes, allEpisodes }: HomeProps) {
                   <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
                 </div>
-                <button
+                <Button
+                  className="bg-lime-600 hover:bg-lime-800 text-right w-8 h-8 border border-gray-100 rounded-md transition-filter duration-200 hover:brightness-90 relative"
                   type="button"
                   onClick={() => playList(episodeList, index)}
                 >
-                  <img src="/play-green.svg" alt="Tocar Episódio" />
-                </button>
+                  <Play size={22} className="absolute inset-0 m-auto" />
+                </Button>
               </li>
             );
           })}
         </ul>
       </section>
+      <hr className={styles.hr} />
       <section className={styles.allEpisodes}>
         <h2>Todos os Episódios</h2>
-        <table cellSpacing={0}>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Podcast</th>
-              <th>Integrantes</th>
-              <th>Data</th>
-              <th>Duração</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+
+        <Table className="w-full table-fixed h-[400px] overflow-hidden pb-8">
+          <TableHeader className="sticky top-0 bg-white">
+            <TableRow>
+              <TableHead className="w-1/12 text-left"></TableHead>
+              <TableHead className="w-1/3 text-start uppercase text-gray-400 font-medium text-xs">
+                Podcast
+              </TableHead>
+              <TableHead className="w-1/3 text-start px-0 mx-0 uppercase text-gray-400 font-medium text-xs">
+                Integrantes
+              </TableHead>
+              <TableHead className="w-[11%] text-start uppercase text-gray-400 font-medium text-xs">
+                Data
+              </TableHead>
+              <TableHead className="w-1/4 text-start uppercase text-gray-400 font-medium text-xs">
+                Duração
+              </TableHead>
+              <TableHead className="w-1/12 text-left"></TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody className="max-h-[40vh] overflow-y-scroll block">
             {allEpisodes.map((episode, index) => {
+              helpers.handleData(episode.publishedAt);
+
               return (
-                <tr key={episode.id}>
-                  <td style={{ width: 72 }}>
+                <TableRow key={episode.id} className="table">
+                  <TableCell className="w-1/12 p-3 border-b border-gray-100">
                     <Image
                       width={120}
                       height={120}
                       src={episode.thumbnail}
                       alt={episode.description}
-                      objectFit={"cover"}
+                      className="object-cover w-10 h-10 rounded-md"
                     />
-                  </td>
-                  <td>
+                  </TableCell>
+                  <TableCell className="w-1/3">
                     <Link href={`episodes/${episode.id}`}>
                       <>{episode.title}</>
                     </Link>
-                  </td>
-                  <td>{episode.members}</td>
-                  <td style={{ width: 100 }}>{episode.publishedAt}</td>
-                  <td>{episode.durationAsString}</td>
-                  <td>
-                    <button
+                  </TableCell>
+                  <TableCell className="w-1/3 p-3 border-b border-gray-100">
+                    {episode.members}
+                  </TableCell>
+                  <TableCell className="w-1/12 p-3 border-b border-gray-100 text-center">
+                    {helpers.handleData(episode.publishedAt)}
+                  </TableCell>
+                  <TableCell className="w-1/4 p-3 border-b border-gray-100 text-center">
+                    {episode.durationAsString}
+                  </TableCell>
+                  <TableCell className="w-1/4 p-3 border-b border-gray-100">
+                    <Button
+                      className="bg-violet-500 text-right w-8 h-8 border border-gray-100 rounded-md transition-filter duration-200 hover:brightness-90 relative"
                       type="button"
                       onClick={() =>
                         playList(episodeList, index + lastestEpisodes.length)
                       }
                     >
-                      <img src="/play-green.svg" alt="Tocar Episódio" />
-                    </button>
-                  </td>
-                </tr>
+                      <Play size={20} className="absolute inset-0 m-auto" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </section>
     </div>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  // export async function getServerProps(){
   const { data } = await api.get("episodes", {
     params: {
-      _limit: 1,
+      _limit: 30,
       _sort: "published_at",
       _order: "desc",
     },
   });
-  // const res = await api.get('https://refeitorio-api.herokuapp.com/listatodosospratos');
-  // console.log(res.data[0].nome);
-  // const {data} = await api.get('/');
 
-  // const response = data;
-  console.log(data);
   const episodes = data.map((episode) => {
     return {
       id: episode.id,
