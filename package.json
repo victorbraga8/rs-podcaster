@@ -16,6 +16,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^2.21.1",
     "eslint-config-next": "^14.2.12",
+    "lucide": "^0.477.0",
     "lucide-react": "^0.441.0",
     "miragejs": "^0.1.43",
     "next": "^14.2.12",
